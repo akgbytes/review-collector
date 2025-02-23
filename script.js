@@ -6,6 +6,8 @@ const reviewsContainer = document.getElementById("reviews-container");
 const reviewsList = document.getElementById("reviews-list");
 const submitBtn = document.getElementById("submit-review-btn");
 
+const starRatingInput = document.getElementById("star-rating");
+
 const emoji = document.getElementById("emoji");
 
 let stars = 0;
@@ -138,7 +140,6 @@ userRatingInput.addEventListener("click", (event) => {
 
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
-  emoji.innerText = "";
   const userName = userNameInput.value.trim();
   const userReview = userReviewInput.value.trim();
   const avatarUrl = `https://ui-avatars.com/api/?name=${userName}&background=random&length=1`;
@@ -159,6 +160,18 @@ submitBtn.addEventListener("click", (event) => {
   reviewsArray.push(reviewObj);
   localStorage.setItem("reviewsArray", JSON.stringify(reviewsArray));
   renderReviews();
+
+  emoji.innerText = "";
+  userNameInput.value = "";
+  userReviewInput.value = "";
+  starRatingInput.innerText = "";
+  for (let i = 0; i < 5; i++) {
+    const star = document.createElement("img");
+    star.setAttribute("src", "./assets/empty-star.png");
+    star.setAttribute("class", "h-6 w-6");
+    star.setAttribute("id", `star-${i + 1}`);
+    starRatingInput.appendChild(star);
+  }
 });
 
 const renderReviews = () => {
